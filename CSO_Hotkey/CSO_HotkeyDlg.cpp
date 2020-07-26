@@ -69,6 +69,7 @@ void CCSOHotkeyDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GF2Check, m_GF2Check);
 	DDX_Control(pDX, IDC_SingGimCheck, m_SingGimCheck);
 	DDX_Control(pDX, IDC_NumpadCheck, m_NumpadCheck);
+	DDX_Control(pDX, IDC_KaahungCheck, m_KaahungCheck);
 }
 
 BEGIN_MESSAGE_MAP(CCSOHotkeyDlg, CDialogEx)
@@ -78,6 +79,7 @@ BEGIN_MESSAGE_MAP(CCSOHotkeyDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_GF2Check, &CCSOHotkeyDlg::OnBnClickedGf2check)
 	ON_BN_CLICKED(IDC_SingGimCheck, &CCSOHotkeyDlg::OnBnClickedSinggimcheck)
 	ON_BN_CLICKED(IDC_NumpadCheck, &CCSOHotkeyDlg::OnBnClickedNumpadcheck)
+	ON_BN_CLICKED(IDC_KaahungCheck, &CCSOHotkeyDlg::OnBnClickedKaahungcheck)
 END_MESSAGE_MAP()
 
 
@@ -180,7 +182,7 @@ DWORD WINAPI GF2Thread(LPVOID lpThreadParameter)
 			while (GetMessage(&msg, NULL, 0, 0) != 0)
 			{
 				if (!g_dlg->m_GF2Check.GetCheck())break;
-				if (msg.message == WM_HOTKEY)
+				if (msg.message == WM_HOTKEY && GetAsyncKeyState('F'))
 				{
 					switch (msg.wParam)
 					{
@@ -192,12 +194,14 @@ DWORD WINAPI GF2Thread(LPVOID lpThreadParameter)
 						break;
 					}
 				}
+				while (GetAsyncKeyState('F'))Sleep(250);
 			}
 		}
 		else
 		{
 			UnregisterHotKey(hConsole, 1);
 			UnregisterHotKey(hConsole, 2);
+			break;
 		}
 		Sleep(1000);
 	}
@@ -209,6 +213,7 @@ DWORD WINAPI SingGimThread(LPVOID lpThreadParameter)
 	g_dlg->SingGim();
 	return NULL;
 }
+
 DWORD WINAPI SingGimThread_Forcheck(LPVOID lpThreadParameter)
 {
 	MSG msg = { 0 };
@@ -237,7 +242,7 @@ DWORD WINAPI SingGimThread_Forcheck(LPVOID lpThreadParameter)
 		{
 			UnregisterHotKey(hConsole, 3);
 			keySingGim = -1;
-			return 0;
+			break;
 		}
 		Sleep(1000);
 	}
@@ -289,7 +294,46 @@ DWORD WINAPI NumpadCheckthread(LPVOID lpThreadParameter)
 			UnregisterHotKey(hConsole, 2);
 			keyDPS_Left = -1;
 			keyDPS_Right = -1;
-			return 0;
+			break;
+		}
+		Sleep(1000);
+	}
+	return NULL;
+}
+
+DWORD WINAPI KaahungThread(LPVOID lpThreadParameter)
+{
+	MSG msg = { 0 };
+	HWND hConsole = GetActiveWindow();
+	while (true)
+	{
+		if (g_dlg->m_KaahungCheck.GetCheck())
+		{
+			RegisterHotKey(hConsole, 1, MOD_NOREPEAT, 'C');
+			RegisterHotKey(hConsole, 2, MOD_NOREPEAT | MOD_CONTROL, 'C');
+			while (GetMessage(&msg, NULL, 0, 0) != 0)
+			{
+				if (!g_dlg->m_KaahungCheck.GetCheck())break;
+				if (msg.message == WM_HOTKEY && GetAsyncKeyState('C'))
+				{
+					switch (msg.wParam)
+					{
+					case 1:
+						cs.kaahung(); break;
+					case 2:
+						cs.kaahung(); break;
+					default:
+						break;
+					}
+				}
+				while (GetAsyncKeyState('C'))Sleep(250);
+			}
+		}
+		else
+		{
+			UnregisterHotKey(hConsole, 1);
+			UnregisterHotKey(hConsole, 2);
+			break;
 		}
 		Sleep(1000);
 	}
@@ -379,5 +423,19 @@ void CCSOHotkeyDlg::OnBnClickedNumpadcheck()
 		CloseHandle(m_NumpadCheckthread);
 		CloseHandle(m_DPS_Leftthread);
 		CloseHandle(m_DPS_Rightthread);
+	}
+}
+
+
+void CCSOHotkeyDlg::OnBnClickedKaahungcheck()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	if (m_KaahungCheck.GetCheck())
+	{
+		m_KaahungThread = CreateThread(NULL, NULL, KaahungThread, NULL, NULL, NULL);
+	}
+	else
+	{
+		CloseHandle(m_GF2thread);
 	}
 }

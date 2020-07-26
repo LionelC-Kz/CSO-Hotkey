@@ -38,13 +38,16 @@ public:
 	HANDLE m_NumpadCheckthread;
 	HANDLE m_DPS_Leftthread;
 	HANDLE m_DPS_Rightthread;
+	HANDLE m_KaahungThread;
 	void SingGim();
 	void DPS_Left();
 	void DPS_Right();
 	CButton m_GF2Check;
 	CButton m_SingGimCheck;
 	CButton m_NumpadCheck;
+	CButton m_KaahungCheck;
 	afx_msg void OnBnClickedGf2check();
 	afx_msg void OnBnClickedSinggimcheck();
 	afx_msg void OnBnClickedNumpadcheck();
+	afx_msg void OnBnClickedKaahungcheck();
 };

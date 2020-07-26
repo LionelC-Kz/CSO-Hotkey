@@ -58,6 +58,33 @@ public:
 		release_key(51);//3
 		Sleep(25);
 	}
+	void kaahung()
+	{
+		RECT desktop;
+		const HWND hDesktop = GetDesktopWindow();
+		GetWindowRect(hDesktop, &desktop);
+		int x = 0, y = 0;
+
+		POINT pos;
+		GetCursorPos(&pos);
+		HWND processHANDLE = WindowFromPoint(pos);
+		mouse_event(MOUSEEVENTF_WHEEL, 0, 0, 120, 0);
+		Sleep(25);
+		press_key(13);//Enter
+		Sleep(25);
+		release_key(13);//Enter
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		pos.x = 910, pos.y = -15;
+		ClientToScreen(processHANDLE, &pos);
+		mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, dx(pos.x, desktop), dy(pos.y, desktop), 0, 0);
+		mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, dx(pos.x - 398, desktop), dy(pos.y + 387, desktop), 0, 0);
+		Sleep(2750);
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		press_key(13);//Enter
+		Sleep(25);
+		release_key(13);//Enter
+	}
 private:
 	BYTE scan_code(DWORD pKey)
 	{
@@ -72,4 +99,15 @@ private:
 	{
 		keybd_event((BYTE)(pKey), scan_code(pKey), KEYEVENTF_KEYUP, 0);
 	}
+	int dx(int p_x, RECT desktop)
+	{
+		float x = p_x * (65535.0 / desktop.right);
+		return int(x);
+	}
+
+	int dy(int p_y, RECT desktop)
+	{
+		float y = p_y * (65535.0 / desktop.bottom);
+		return int(y);
+	} 
 };
