@@ -63,27 +63,31 @@ public:
 		RECT desktop;
 		const HWND hDesktop = GetDesktopWindow();
 		GetWindowRect(hDesktop, &desktop);
-		int x = 0, y = 0;
 
 		POINT pos;
 		GetCursorPos(&pos);
 		HWND processHANDLE = WindowFromPoint(pos);
 		mouse_event(MOUSEEVENTF_WHEEL, 0, 0, 120, 0);
 		Sleep(25);
-		press_key(13);//Enter
-		Sleep(25);
-		release_key(13);//Enter
+		//press_key(13);//Enter
+		//Sleep(25);
+		//release_key(13);//Enter
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
-		pos.x = 910, pos.y = -15;
+		pos.x = min_x, pos.y = min_y;
 		ClientToScreen(processHANDLE, &pos);
 		mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, dx(pos.x, desktop), dy(pos.y, desktop), 0, 0);
 		mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, dx(pos.x - 398, desktop), dy(pos.y + 387, desktop), 0, 0);
 		Sleep(2750);
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-		press_key(13);//Enter
-		Sleep(25);
-		release_key(13);//Enter
+		//press_key(13);//Enter
+		//Sleep(25);
+		//release_key(13);//Enter
+	}
+	void Setminpos(int x,int y)
+	{
+		min_x = x;
+		min_y = y;
 	}
 private:
 	BYTE scan_code(DWORD pKey)
@@ -110,4 +114,6 @@ private:
 		float y = p_y * (65535.0 / desktop.bottom);
 		return int(y);
 	} 
+	int min_x = 910;
+	int min_y = -15;
 };

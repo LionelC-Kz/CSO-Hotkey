@@ -80,6 +80,7 @@ BEGIN_MESSAGE_MAP(CCSOHotkeyDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SingGimCheck, &CCSOHotkeyDlg::OnBnClickedSinggimcheck)
 	ON_BN_CLICKED(IDC_NumpadCheck, &CCSOHotkeyDlg::OnBnClickedNumpadcheck)
 	ON_BN_CLICKED(IDC_KaahungCheck, &CCSOHotkeyDlg::OnBnClickedKaahungcheck)
+	ON_BN_CLICKED(IDC_Setminpos, &CCSOHotkeyDlg::OnBnClickedSetminpos)
 END_MESSAGE_MAP()
 
 
@@ -194,7 +195,7 @@ DWORD WINAPI GF2Thread(LPVOID lpThreadParameter)
 						break;
 					}
 				}
-				while (GetAsyncKeyState('F'))Sleep(250);
+				while (GetAsyncKeyState('F'))Sleep(50);
 			}
 		}
 		else
@@ -438,4 +439,16 @@ void CCSOHotkeyDlg::OnBnClickedKaahungcheck()
 	{
 		CloseHandle(m_GF2thread);
 	}
+}
+
+
+void CCSOHotkeyDlg::OnBnClickedSetminpos()
+{
+	// TODO: 在此加入控制項告知處理常式程式碼
+	POINT pos;
+	MessageBox(L"請將滑鼠移到最小化\n然後按下Enter", L"提示", MB_TOPMOST);
+	GetCursorPos(&pos);
+	HWND processHANDLE = ::WindowFromPoint(pos);
+	::ScreenToClient(processHANDLE, &pos);
+	cs.Setminpos(pos.x, pos.y);
 }

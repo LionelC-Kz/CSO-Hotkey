@@ -50,4 +50,5 @@ public:
 	afx_msg void OnBnClickedSinggimcheck();
 	afx_msg void OnBnClickedNumpadcheck();
 	afx_msg void OnBnClickedKaahungcheck();
+	afx_msg void OnBnClickedSetminpos();
 };

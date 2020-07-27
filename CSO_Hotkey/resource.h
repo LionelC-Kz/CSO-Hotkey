@@ -7,13 +7,12 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_CSO_HOTKEY_DIALOG           102
 #define IDR_MAINFRAME                   128
-#define IDC_BUTTON1                     1001
+#define IDC_Setminpos                   1001
 #define IDC_HOTKEY1                     1002
 #define IDC_GF2Check                    1004
 #define IDC_SingGimCheck                1005
 #define IDC_NumpadCheck                 1006
 #define IDC_NumpadText                  1007
-#define IDC_GF2Check2                   1008
 #define IDC_KaahungCheck                1008
 
 // Next default values for new objects
