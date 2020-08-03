@@ -350,7 +350,7 @@ void CCSOHotkeyDlg::SingGim()
 			cs.Singgimdefence();
 		}
 		if (!m_SingGimCheck.GetCheck())return;
-		Sleep(50);
+		if (keySingGim == -1)Sleep(50);
 	}
 }
 
@@ -363,7 +363,7 @@ void CCSOHotkeyDlg::DPS_Left()
 			cs.DPS_Left();
 		}
 		if (!m_NumpadCheck.GetCheck())return;
-		Sleep(50);
+		if (keyDPS_Left == -1)Sleep(50);
 	}
 }
 
@@ -376,7 +376,7 @@ void CCSOHotkeyDlg::DPS_Right()
 			cs.DPS_Right();
 		}
 		if (!m_NumpadCheck.GetCheck())return;
-		Sleep(50);
+		if (keyDPS_Right == -1)Sleep(50);
 	}
 }
 

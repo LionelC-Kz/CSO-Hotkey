@@ -4,6 +4,60 @@
 class CSOScript
 {
 public:
+	void DOICW()
+	{
+		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+		Sleep(55);
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		press_key('G');
+		release_key('G');
+		press_key(113);//F2
+		release_key(113);//F2
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(1250);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		Sleep(50);
+		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+		Sleep(750);
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		Sleep(250);
+		kaahung();
+
+	}
+	void GaiPaau()
+	{
+		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+		Sleep(135);
+		press_key('G');
+		release_key('G');
+		press_key(113);//F2
+		release_key(113);//F2
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		Sleep(675);
+	}
+	void StormGiant()
+	{
+		press_key(81);//Q
+		release_key(81);//Q
+		press_key(51);//3
+		Sleep(40);
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(125);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		Sleep(460);
+		release_key(51);//3
+		Sleep(25);
+	}
+	void StormGiant_F2()
+	{
+		press_key(113);//F2
+		release_key(113);//F2
+		Sleep(280);
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(250);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		Sleep(25);
+	}
 	void GF2()
 	{
 		press_key('G');
@@ -15,19 +69,17 @@ public:
 	void Singgimdefence()
 	{
 		press_key(51);//3
-		Sleep(125);
-		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		release_key(51);//3
 		Sleep(25);
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
 		Sleep(25);
 		press_key(113);//F2
-		Sleep(25);
-		release_key(51);//3
-		Sleep(25);
 		release_key(113);//F2
+		Sleep(25);
 		press_key(81);//Q
 		release_key(81);//Q
-		Sleep(2730);
+		Sleep(2935);
 	}
 
 	void DPS_Left()
@@ -35,12 +87,10 @@ public:
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 		Sleep(520);
 		press_key('J');
-		Sleep(15);
 		release_key('J');
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-		Sleep(200);
+		Sleep(185);
 		press_key(51);//3
-		Sleep(25);
 		release_key(51);//3
 		Sleep(25);
 	}
@@ -49,13 +99,31 @@ public:
 		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
 		Sleep(300);
 		press_key('J');
-		Sleep(5);
 		release_key('J');
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
-		Sleep(200);
+		Sleep(175);
 		press_key(51);//3
-		Sleep(25);
 		release_key(51);//3
+		Sleep(25);
+	}
+	void DPS_Left_F2()
+	{
+		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+		Sleep(680);
+		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+		Sleep(25);
+		press_key(113);//F2
+		release_key(113);//F2
+		Sleep(25);
+	}
+	void DPS_Right_F2()
+	{
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(450);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		Sleep(25);
+		press_key(113);//F2
+		release_key(113);//F2
 		Sleep(25);
 	}
 	void kaahung()
@@ -69,9 +137,6 @@ public:
 		HWND processHANDLE = WindowFromPoint(pos);
 		mouse_event(MOUSEEVENTF_WHEEL, 0, 0, 120, 0);
 		Sleep(25);
-		//press_key(13);//Enter
-		//Sleep(25);
-		//release_key(13);//Enter
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
 		pos.x = min_x, pos.y = min_y;
@@ -80,9 +145,6 @@ public:
 		mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, dx(pos.x - 398, desktop), dy(pos.y + 387, desktop), 0, 0);
 		Sleep(2750);
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-		//press_key(13);//Enter
-		//Sleep(25);
-		//release_key(13);//Enter
 	}
 	void Setminpos(int x,int y)
 	{
