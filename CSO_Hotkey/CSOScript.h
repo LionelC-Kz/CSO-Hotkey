@@ -87,10 +87,12 @@ public:
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 		Sleep(520);
 		press_key('J');
+		Sleep(25);
 		release_key('J');
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 		Sleep(185);
 		press_key(51);//3
+		Sleep(25);
 		release_key(51);//3
 		Sleep(25);
 	}
@@ -99,10 +101,12 @@ public:
 		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
 		Sleep(300);
 		press_key('J');
+		Sleep(25);
 		release_key('J');
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
 		Sleep(175);
 		press_key(51);//3
+		Sleep(25);
 		release_key(51);//3
 		Sleep(25);
 	}
