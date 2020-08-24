@@ -32,6 +32,16 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	HANDLE m_GF2thread;
+	HANDLE m_SingGimthread;
+	HANDLE m_SingGimthread_Forcheck;
+	HANDLE m_NumpadCheckthread;
+	HANDLE m_DPS_Leftthread;
+	HANDLE m_DPS_Rightthread;
+	HANDLE m_KaahungThread;
+	void SingGim();
+	void DPS_Left();
+	void DPS_Right();
 	CButton m_GF2Check;
 	CButton m_SingGimCheck;
 	CButton m_NumpadCheck;

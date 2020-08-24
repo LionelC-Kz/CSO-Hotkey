@@ -4,6 +4,47 @@
 class CSOScript
 {
 public:
+	void SingGim_DPS_BUG_F2()
+	{
+		press_key(51);//3
+		release_key(51);//3
+
+		Sleep(75);
+		press_key('B');
+		release_key('B');
+		Sleep(25);
+		press_key(57);//9
+		release_key(57);//9
+		Sleep(25);
+		press_key(51);//3
+		release_key(51);//3
+
+		Sleep(75);
+		press_key('B');
+		release_key('B');
+		Sleep(25);
+		press_key(57);//9
+		release_key(57);//9
+		Sleep(25);
+		press_key(55);//7
+		release_key(55);//7
+		Sleep(150);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+	}
+	void T7_F2()
+	{
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(50);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		press_key('G');
+		release_key('G');
+		press_key(113);//F2
+		release_key(113);//F2
+		Sleep(800);
+		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+		Sleep(3635);
+	}
 	void DOICW()
 	{
 		mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
@@ -22,7 +63,6 @@ public:
 		mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 		Sleep(250);
 		kaahung();
-
 	}
 	void GaiPaau()
 	{
@@ -70,8 +110,8 @@ public:
 	{
 		press_key(51);//3
 		release_key(51);//3
-		Sleep(25);
 		mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+		Sleep(25);
 		mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
 		Sleep(25);
 		press_key(113);//F2

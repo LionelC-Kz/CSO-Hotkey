@@ -36,6 +36,9 @@
     <ClInclude Include="CSOScript.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="Hotkey.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSO_Hotkey.cpp">

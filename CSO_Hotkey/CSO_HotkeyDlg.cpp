@@ -8,6 +8,7 @@
 #include "CSO_HotkeyDlg.h"
 #include "afxdialogex.h"
 #include "CSOScript.h"
+#include "Hotkey.h"
 
 CSOScript cs;
 
@@ -15,10 +16,12 @@ CSOScript cs;
 #define new DEBUG_NEW
 #endif
 
+#define logbox(fmt, ...)\
+CString str; \
+str.Format(CString(fmt), __VA_ARGS__); \
+AfxMessageBox(str);
+
 CCSOHotkeyDlg* g_dlg;
-int keySingGim = -1;
-int keyDPS_Left = -1;
-int keyDPS_Right = -1;
 
 // 對 App About 使用 CAboutDlg 對話方塊
 
@@ -170,281 +173,94 @@ HCURSOR CCSOHotkeyDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-DWORD WINAPI GF2Thread(LPVOID lpThreadParameter)
-{
-	MSG msg = { 0 };
-	HWND hConsole = GetActiveWindow();
-	while (true)
-	{
-		if (g_dlg->m_GF2Check.GetCheck())
-		{
-			RegisterHotKey(hConsole, 1, MOD_NOREPEAT, 'F');
-			RegisterHotKey(hConsole, 2, MOD_NOREPEAT | MOD_CONTROL, 'F');
-			while (GetMessage(&msg, NULL, 0, 0) != 0)
-			{
-				if (!g_dlg->m_GF2Check.GetCheck())break;
-				if (msg.message == WM_HOTKEY && GetAsyncKeyState('F'))
-				{
-					switch (msg.wParam)
-					{
-					case 1:
-						cs.GF2(); break;
-					case 2:
-						cs.GF2(); break;
-					default:
-						break;
-					}
-				}
-				while (GetAsyncKeyState('F'))Sleep(50);
-			}
-		}
-		else
-		{
-			UnregisterHotKey(hConsole, 1);
-			UnregisterHotKey(hConsole, 2);
-			break;
-		}
-		Sleep(1000);
-	}
-	return NULL;
-}
-
-DWORD WINAPI SingGimThread(LPVOID lpThreadParameter)
-{
-	g_dlg->SingGim();
-	return NULL;
-}
-
-DWORD WINAPI SingGimThread_Forcheck(LPVOID lpThreadParameter)
-{
-	MSG msg = { 0 };
-	HWND hConsole = GetActiveWindow();
-	while (true)
-	{
-		if (g_dlg->m_SingGimCheck.GetCheck())
-		{
-			RegisterHotKey(hConsole, 3, MOD_NOREPEAT, 'V');
-			while (GetMessage(&msg, NULL, 0, 0) != 0)
-			{
-				if (!g_dlg->m_SingGimCheck.GetCheck())break;
-				if (msg.message == WM_HOTKEY)
-				{
-					switch (msg.wParam)
-					{
-					case 3:
-						keySingGim *= -1; break;
-					default:
-						break;
-					}
-				}
-			}
-		}
-		else
-		{
-			UnregisterHotKey(hConsole, 3);
-			keySingGim = -1;
-			break;
-		}
-		Sleep(1000);
-	}
-	return NULL;
-}
-
-DWORD WINAPI DPS_Leftthread(LPVOID lpThreadParameter)
-{
-	g_dlg->DPS_Left();
-	return NULL;
-}
-
-DWORD WINAPI DPS_Rightthread(LPVOID lpThreadParameter)
-{
-	g_dlg->DPS_Right();
-	return NULL;
-}
-
-DWORD WINAPI NumpadCheckthread(LPVOID lpThreadParameter)
-{
-	MSG msg = { 0 };
-	HWND hConsole = GetActiveWindow();
-	while (true)
-	{
-		if (g_dlg->m_NumpadCheck.GetCheck())
-		{
-			RegisterHotKey(hConsole, 1, MOD_NOREPEAT, 97);//num1
-			RegisterHotKey(hConsole, 2, MOD_NOREPEAT, 98);//num2
-			while (GetMessage(&msg, NULL, 0, 0) != 0)
-			{
-				if (!g_dlg->m_NumpadCheck.GetCheck())break;
-				if (msg.message == WM_HOTKEY)
-				{
-					switch (msg.wParam)
-					{
-					case 1:
-						keyDPS_Left *= -1; break;
-					case 2:
-						keyDPS_Right *= -1; break;
-					default:
-						break;
-					}
-				}
-			}
-		}
-		else
-		{
-			UnregisterHotKey(hConsole, 1);
-			UnregisterHotKey(hConsole, 2);
-			keyDPS_Left = -1;
-			keyDPS_Right = -1;
-			break;
-		}
-		Sleep(1000);
-	}
-	return NULL;
-}
-
-DWORD WINAPI KaahungThread(LPVOID lpThreadParameter)
-{
-	MSG msg = { 0 };
-	HWND hConsole = GetActiveWindow();
-	while (true)
-	{
-		if (g_dlg->m_KaahungCheck.GetCheck())
-		{
-			RegisterHotKey(hConsole, 1, MOD_NOREPEAT, 'C');
-			RegisterHotKey(hConsole, 2, MOD_NOREPEAT | MOD_CONTROL, 'C');
-			while (GetMessage(&msg, NULL, 0, 0) != 0)
-			{
-				if (!g_dlg->m_KaahungCheck.GetCheck())break;
-				if (msg.message == WM_HOTKEY && GetAsyncKeyState('C'))
-				{
-					switch (msg.wParam)
-					{
-					case 1:
-						cs.kaahung(); break;
-					case 2:
-						cs.kaahung(); break;
-					default:
-						break;
-					}
-				}
-				while (GetAsyncKeyState('C'))Sleep(250);
-			}
-		}
-		else
-		{
-			UnregisterHotKey(hConsole, 1);
-			UnregisterHotKey(hConsole, 2);
-			break;
-		}
-		Sleep(1000);
-	}
-	return NULL;
-}
-
-void CCSOHotkeyDlg::SingGim()
-{
-	while (true)
-	{
-		if (keySingGim == 1)
-		{
-			cs.Singgimdefence();
-		}
-		if (!m_SingGimCheck.GetCheck())return;
-		if (keySingGim == -1)Sleep(50);
-	}
-}
-
-void CCSOHotkeyDlg::DPS_Left()
-{
-	while (true)
-	{
-		if (keyDPS_Left == 1)
-		{
-			cs.DPS_Left();
-		}
-		if (!m_NumpadCheck.GetCheck())return;
-		if (keyDPS_Left == -1)Sleep(50);
-	}
-}
-
-void CCSOHotkeyDlg::DPS_Right()
-{
-	while (true)
-	{
-		if (keyDPS_Right == 1)
-		{
-			cs.DPS_Right();
-		}
-		if (!m_NumpadCheck.GetCheck())return;
-		if (keyDPS_Right == -1)Sleep(50);
-	}
-}
-
 void CCSOHotkeyDlg::OnBnClickedGf2check()
 {
-	// TODO: 在此加入控制項告知處理常式程式碼
+	OnceHotkey* GF2 = new OnceHotkey('F', []()
+		{
+			cs.GF2();
+		}, []()
+		{
+			return (bool)g_dlg->m_GF2Check.GetCheck();
+		});
 	if (m_GF2Check.GetCheck())
 	{
-		m_GF2thread = CreateThread(NULL, NULL, GF2Thread, NULL, NULL, NULL);
+		GF2->run();
 	}
 	else
 	{
-		CloseHandle(m_GF2thread);
+		delete GF2;
 	}
 }
-
 
 void CCSOHotkeyDlg::OnBnClickedSinggimcheck()
 {
-	// TODO: 在此加入控制項告知處理常式程式碼
+	SwitchHotkey* SingGim = new SwitchHotkey('V', []()
+		{
+			cs.Singgimdefence();
+		}, []()
+		{
+			return (bool)g_dlg->m_SingGimCheck.GetCheck();
+		});
 	if (m_SingGimCheck.GetCheck())
 	{
-		m_SingGimthread = CreateThread(NULL, NULL, SingGimThread, NULL, NULL, NULL);
-		m_SingGimthread_Forcheck = CreateThread(NULL, NULL, SingGimThread_Forcheck, NULL, NULL, NULL);
+		SingGim->run();
 	}
 	else
 	{
-		CloseHandle(m_SingGimthread);
-		CloseHandle(m_SingGimthread_Forcheck);
+		delete SingGim;
 	}
 }
-
 
 void CCSOHotkeyDlg::OnBnClickedNumpadcheck()
 {
-	// TODO: 在此加入控制項告知處理常式程式碼
+	SwitchHotkey* DPS_Left = new SwitchHotkey(97, []()
+		{
+			cs.DPS_Left();
+		}, []()
+		{
+			return (bool)g_dlg->m_NumpadCheck.GetCheck();
+		}); //num1
+	SwitchHotkey* DPS_Right = new SwitchHotkey(98, []()
+		{
+			cs.DPS_Right();
+		}, []()
+		{
+			return (bool)g_dlg->m_NumpadCheck.GetCheck();
+		}); //num2
 	if (m_NumpadCheck.GetCheck())
 	{
-		m_NumpadCheckthread = CreateThread(NULL, NULL, NumpadCheckthread, NULL, NULL, NULL);
-		m_DPS_Leftthread = CreateThread(NULL, NULL, DPS_Leftthread, NULL, NULL, NULL);
-		m_DPS_Rightthread = CreateThread(NULL, NULL, DPS_Rightthread, NULL, NULL, NULL);
+		DPS_Left->run();
+		DPS_Right->run();
 	}
 	else
 	{
-		CloseHandle(m_NumpadCheckthread);
-		CloseHandle(m_DPS_Leftthread);
-		CloseHandle(m_DPS_Rightthread);
+		delete DPS_Left;
+		delete DPS_Right;
 	}
 }
 
-
 void CCSOHotkeyDlg::OnBnClickedKaahungcheck()
 {
-	// TODO: 在此加入控制項告知處理常式程式碼
+	OnceHotkey* kaahung = new OnceHotkey('C', []()
+		{
+			cs.kaahung();
+		}, []()
+		{
+			return (bool)g_dlg->m_KaahungCheck.GetCheck();
+		});
 	if (m_KaahungCheck.GetCheck())
 	{
-		m_KaahungThread = CreateThread(NULL, NULL, KaahungThread, NULL, NULL, NULL);
+		kaahung->run();
 	}
 	else
 	{
-		CloseHandle(m_GF2thread);
+		delete kaahung;
 	}
 }
 
 
 void CCSOHotkeyDlg::OnBnClickedSetminpos()
 {
-	// TODO: 在此加入控制項告知處理常式程式碼
 	POINT pos;
 	MessageBox(L"請將滑鼠移到最小化\n然後按下Enter", L"提示", MB_TOPMOST);
 	GetCursorPos(&pos);

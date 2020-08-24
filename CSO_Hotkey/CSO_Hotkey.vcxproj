@@ -187,6 +187,7 @@
     <ClInclude Include="CSO_Hotkey.h" />
     <ClInclude Include="CSO_HotkeyDlg.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Hotkey.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
